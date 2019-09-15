@@ -23,7 +23,12 @@ public class Servidor
      */
     public static void main(String args[])
     {
-        ReadPropaganda();
+        Servidor s= new Servidor();
+        s.ReadPropaganda();
+        for (Propaganda p : s.ads){
+            System.out.println( p.getId() + "----" +p.getTema()+"----"+p.getCategoria() + "----"+p.getAd());
+
+        }
 
        /*try
         {
@@ -55,16 +60,15 @@ public class Servidor
             System.out.println("Ha ocurrido una excepcion no esperada...");
             e.printStackTrace();
         }*/
-
     }
-    public static   void ReadPropaganda(){
+    public void ReadPropaganda(){
         try{
             FileReader f=new FileReader("fuentes.txt");
             BufferedReader b= new BufferedReader(f);
-
+            int cont=0;
             int id;
-            String tema;
-            String categoria;
+            String tema = null;
+            String categoria = null;
             String text;
 
             String linea= b.readLine();
@@ -76,25 +80,32 @@ public class Servidor
                     StringTokenizer token= new StringTokenizer(aux, "-");
                     tema=token.nextToken();
                     categoria=token.nextToken();
-                    System.out.println(tema);
-                    System.out.println(categoria);
-                    System.out.println(linea);
+
                 }
-                while(!linea.contains("*")){
-                    StringBuilder sb = new StringBuilder();
-                    sb.append(linea);
-                    sb.append(System.lineSeparator());
-                    linea = b.readLine();
-                    System.out.println(sb.toString());
-                }
+                StringBuilder sb = new StringBuilder();
                 linea = b.readLine();
+                while(!linea.contains("*")){
+
+                    sb.append(linea);
+                    linea = b.readLine();
+
+                }
+                text=sb.toString();
+                linea = b.readLine();
+                cont++;
+                if(tema!= null && categoria!=null){
+                    Propaganda p= new Propaganda(cont,tema,categoria,text);
+                    ads.add(p);
+                }else{
+                    System.out.println("Error al crear noticia");
+                }
 
 
 
             }
 
         }catch (Exception e){
-
+                System.out.println("Error en el archivo");
         }
     }
 }

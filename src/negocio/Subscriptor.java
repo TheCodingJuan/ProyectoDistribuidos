@@ -39,9 +39,8 @@ public class Subscriptor
 
             socket = new Socket(host, Integer.parseInt(puerto));
             entrada = socket.getInputStream();
-            salida = socket.getOutputStream();
-            Tuple tp = new
-            salida.write(numero.getBytes());
+         //   salida = socket.getOutputStream();
+         //   salida.write(numero.getBytes());
 
             byte[] b = new byte[10];
             entrada.read(b);
