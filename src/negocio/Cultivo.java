@@ -7,17 +7,19 @@ public class Cultivo
     private String clima;
     private String ubicacion;
     private String tipoDeProducto;
-    private String precioDeProducto;
+    private int tamaño;
+    private int precioDeProducto;
 
     //constructor por defecto.
     public Cultivo() {}
 
     //constructor completo, para instanciar con datos concretos al declarar.
-    public Cultivo(String clima, String ubicacion, String tipoDeProducto, String precio) {
+    public Cultivo(String clima, String ubicacion, String tipoDeProducto, int precio, int tam) {
         this.clima = clima;
         this.ubicacion = ubicacion;
         this.tipoDeProducto = tipoDeProducto;
         this.precioDeProducto = precio;
+        this.tamaño=tam;
     }
 
     //conjunto de getters y setters para los atributos de la clase.
@@ -45,11 +47,13 @@ public class Cultivo
         this.tipoDeProducto = tipoDeProducto;
     }
 
-    public String getPrecioDeProducto() {
-        return precioDeProducto;
-    }
+    public int getPrecioDeProducto() {  return precioDeProducto;    }
 
-    public void setPrecioDeProducto(String precioDeProducto) {
+    public void setPrecioDeProducto(int precioDeProducto) {
         this.precioDeProducto = precioDeProducto;
     }
+
+    public int getTamaño() {   return tamaño;    }
+
+    public void setTamaño(int tamaño) {     this.tamaño = tamaño;    }
 }

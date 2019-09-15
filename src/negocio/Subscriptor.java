@@ -3,27 +3,28 @@ package negocio;
 import netscape.javascript.JSObject;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.net.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
-public class Subscriptor
-{
+public class Subscriptor extends Thread {
     Socket socket;
     InputStream entrada;
     OutputStream salida;
     Cultivo cultivo;
+    private String Name;
+    private String Apellido;
+    private List<String> interes = new ArrayList<>(30);
 
-    public static void main(String args[])
-    {
-        if (args.length >= 3 && args.length < 8)
-        {
-            //new Cliente(args[0], args[1], args[2]);
-        }
-        else
-        {
-            System.out.println("Uso: java Cliente [HOST] [PUERTO] [CATEGORIA] (entre 1 y 5)");
-            System.exit(0);
-        }
+    @Override
+    public void run(){
+
+        System.out.println("Cliente :" + this.Name);
     }
+
+
 
     /**
      Constructor de la clase.
@@ -31,27 +32,32 @@ public class Subscriptor
      @param puerto Puerto del servidor
      @param numero Numero que se desea procesar
      */
-    public Subscriptor(String host, String puerto, String numero)
+    public Subscriptor(String host, String puerto, String numero, List<String> s,Cultivo c, String nom, String Ap)
     {
-        try
-        {
+       // try
+        //{
             System.out.println("Subscriptor: conectando al host: " + host + "por el puerto:" + puerto);
 
-            socket = new Socket(host, Integer.parseInt(puerto));
-            entrada = socket.getInputStream();
+           // socket = new Socket(host, Integer.parseInt(puerto));
+           // entrada = socket.getInputStream();
          //   salida = socket.getOutputStream();
          //   salida.write(numero.getBytes());
 
-            byte[] b = new byte[10];
-            entrada.read(b);
+         //   byte[] b = new byte[10];
+          //  entrada.read(b);
 
             System.out.println("Cliente: numero = " + numero);
-            System.out.println("Cliente: suma = " + new String(b));
-        }
-        catch (IOException e)
-        {
-            System.out.println("Ha ocurrido una excepcion no esperada...");
-            e.printStackTrace();
-        }
+         //   System.out.println("Cliente: suma = " + new String(b));
+            this.cultivo=c;
+            this.interes=s;
+            this.Name=nom;
+            this.Apellido=Ap;
+       // }
+      //  catch (IOException e)
+        //{
+         //   System.out.println("Ha ocurrido una excepcion no esperada...");
+         //   e.printStackTrace();
+       // }
     }
+
 }
