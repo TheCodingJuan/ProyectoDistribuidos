@@ -1,5 +1,7 @@
 package negocio;
 
+import netscape.javascript.JSObject;
+
 import java.io.*;
 import java.net.*;
 
@@ -38,7 +40,7 @@ public class Subscriptor
             socket = new Socket(host, Integer.parseInt(puerto));
             entrada = socket.getInputStream();
             salida = socket.getOutputStream();
-
+            Tuple tp = new
             salida.write(numero.getBytes());
 
             byte[] b = new byte[10];

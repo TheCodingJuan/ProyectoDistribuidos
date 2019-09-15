@@ -2,9 +2,16 @@ package negocio;
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
+
 
 public class Servidor
 {
+    //lista de todas las propagandas en el sistema
+    private List<Propaganda> ads = new ArrayList<>(33);
+
     //constructor por defecto.
     public Servidor() {}
 
@@ -16,7 +23,9 @@ public class Servidor
      */
     public static void main(String args[])
     {
-        try
+        ReadPropaganda();
+
+       /*try
         {
             if(args.length != 1)
             {
@@ -45,9 +54,47 @@ public class Servidor
         {
             System.out.println("Ha ocurrido una excepcion no esperada...");
             e.printStackTrace();
+        }*/
+
+    }
+    public static   void ReadPropaganda(){
+        try{
+            FileReader f=new FileReader("fuentes.txt");
+            BufferedReader b= new BufferedReader(f);
+
+            int id;
+            String tema;
+            String categoria;
+            String text;
+
+            String linea= b.readLine();
+            while (linea!= null){
+                String aux=linea;
+
+                if(aux.contains("-"))
+                {
+                    StringTokenizer token= new StringTokenizer(aux, "-");
+                    tema=token.nextToken();
+                    categoria=token.nextToken();
+                    System.out.println(tema);
+                    System.out.println(categoria);
+                    System.out.println(linea);
+                }
+                while(!linea.contains("*")){
+                    StringBuilder sb = new StringBuilder();
+                    sb.append(linea);
+                    sb.append(System.lineSeparator());
+                    linea = b.readLine();
+                    System.out.println(sb.toString());
+                }
+                linea = b.readLine();
+
+
+
+            }
+
+        }catch (Exception e){
+
         }
     }
-
-
-
 }
