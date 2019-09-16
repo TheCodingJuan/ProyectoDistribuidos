@@ -10,8 +10,10 @@ import java.util.StringTokenizer;
 public class Servidor
 {
     //lista de todas las propagandas en el sistema
-    private List<Propaganda> ads = new ArrayList<>(33);
-
+    private static List<Propaganda> ads = new ArrayList<>(33);
+    private static int id;
+    private static String Brokerhost="192.168.0.12";
+    private static int Brokerpuerto=9000;
     //constructor por defecto.
     public Servidor() {}
 
@@ -23,14 +25,14 @@ public class Servidor
      */
     public static void main(String args[])
     {
-        Servidor s= new Servidor();
-        s.ReadPropaganda();
-        for (Propaganda p : s.ads){
+
+        ReadPropaganda();
+        for (Propaganda p : ads){
             System.out.println( p.getId() + "----" +p.getTema()+"----"+p.getCategoria() + "----"+p.getAd());
 
         }
 
-       /*try
+       try
         {
             if(args.length != 1)
             {
@@ -42,6 +44,11 @@ public class Servidor
 
             int port = Integer.parseInt(args[0]);
             ServerSocket ss = new ServerSocket( port );   // ServerSocket que escucha el puerto
+            Socket socket= new Socket();
+            Socket info= new Socket(Brokerhost, Brokerpuerto);// quemadas a mi ip, me iamgino que tocara cambiarlas // socket al broker
+            //falta enviar el onjeto servidor con el mensaje serv para que el broker entienda que es u servidor
+            id= Integer.parseInt(args[1]);
+
 
             System.out.println("ThreadServer: Esperando Conexiones... ");
             System.out.println("*********************************************");
@@ -49,7 +56,7 @@ public class Servidor
             while(true)
             {
 
-                Socket socket = ss.accept( );   // acepta la conexion al realizarse
+                socket = ss.accept( );   // acepta la conexion al realizarse
                 Hilos h = new Hilos(socket);
                 Thread t = new Thread(h);
                 t.start();     // inicializa este nuevo Thread
@@ -59,9 +66,12 @@ public class Servidor
         {
             System.out.println("Ha ocurrido una excepcion no esperada...");
             e.printStackTrace();
-        }*/
+        }
     }
-    public void ReadPropaganda(){
+    public static void enviarNoticia(Propaganda p){
+
+    }
+    public static void ReadPropaganda(){
         try{
             FileReader f=new FileReader("fuentes.txt");
             BufferedReader b= new BufferedReader(f);
@@ -95,6 +105,7 @@ public class Servidor
                 cont++;
                 if(tema!= null && categoria!=null){
                     Propaganda p= new Propaganda(cont,tema,categoria,text);
+                    enviarNoticia(p);
                     ads.add(p);
                 }else{
                     System.out.println("Error al crear noticia");
